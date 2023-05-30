@@ -1,24 +1,62 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import styles from './App.module.scss';
+import Button from 'react-bootstrap/Button';
+import { Map } from './components/Map';
+import { ModalForm } from './components/ModalForm';
+import { MarkersList } from './components/MarkersList';
+import { Marker } from './types/Marker';
+import { LatLng } from 'leaflet';
 
 function App() {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isListVisible, setIsListVisible] = useState(false);
+  const [modalCallback, setModalCallback] = useState<(comment: string) => void>();
+  const [markers, setMarkers] = useState<Marker[]>([]);
+  const [targetLocation, setTargetLocation]
+    = useState<LatLng>(new LatLng(50.443076, 30.534439));
+
+
+  const getComment = (
+    callback: (comment: string) => void) => {
+    setModalCallback(() => callback);
+    setIsModalVisible(true);
+  };
+
+  const goToMarker = (position: LatLng) => {
+    setTargetLocation(position);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div>
+      <main>
+        <MarkersList
+          markers={markers}
+          isShown={isListVisible}
+          setShow={setIsListVisible}
+          goToMarker={goToMarker}
+        />
+  
+        <Map 
+          getComment={getComment}
+          markers={markers}
+          setMarkers={setMarkers}
+          targetLocation={targetLocation}
+        />
+
+        <button
+          className={styles['app__sidebar-button']}
+          onClick={() => setIsListVisible(true)}
         >
-          Learn React
-        </a>
-      </header>
+          {'>'}
+        </button>
+      </main>
+
+      {isModalVisible && (
+        <ModalForm
+          callback={modalCallback}
+          setIsModalVisible={setIsModalVisible}
+        />
+      )}
     </div>
   );
 }
