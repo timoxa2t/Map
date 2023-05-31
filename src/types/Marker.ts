@@ -1,6 +1,7 @@
-import { LatLng } from "leaflet";
-
 export interface Marker {
-  position: LatLng,
-  comment: string,
+  id: number,
+  name: string,
+  description: string,
+  latitude: number,
+  longitude: number,
 }

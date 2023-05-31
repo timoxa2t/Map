@@ -17,11 +17,16 @@
 
 .modal {
   width: 320px;
-  height: 200px;
+  height: auto;
 
   border-radius: 20px;
   padding: 20px;
 
   background-color: white;
 
+  &__spinner {
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+  }
 }

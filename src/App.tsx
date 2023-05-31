@@ -1,29 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './App.module.scss';
-import Button from 'react-bootstrap/Button';
 import { Map } from './components/Map';
 import { ModalForm } from './components/ModalForm';
 import { MarkersList } from './components/MarkersList';
 import { Marker } from './types/Marker';
 import { LatLng } from 'leaflet';
+import { getMarkers } from './servises/api';
+
+const Kyiv = new LatLng(50.443076, 30.534439)
 
 function App() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isListVisible, setIsListVisible] = useState(false);
-  const [modalCallback, setModalCallback] = useState<(comment: string) => void>();
+  const [latLng, setLatLng] = useState<LatLng>();
   const [markers, setMarkers] = useState<Marker[]>([]);
-  const [targetLocation, setTargetLocation]
-    = useState<LatLng>(new LatLng(50.443076, 30.534439));
+  const [targetLocation, setTargetLocation] = useState<LatLng>(Kyiv);
 
 
-  const getComment = (
-    callback: (comment: string) => void) => {
-    setModalCallback(() => callback);
+  useEffect(() => {
+    getMarkers().then(
+      markersFromServer => setMarkers(markersFromServer)
+    );
+  }, []);
+
+  const getModalForm = (coords: LatLng) => {
+    setLatLng(coords);
     setIsModalVisible(true);
   };
 
   const goToMarker = (position: LatLng) => {
     setTargetLocation(position);
+  }
+
+  const removeMarker = (id: number) => {
+    setMarkers(prevMarkers => prevMarkers.filter(marker => marker.id !== id));
   }
 
   return (
@@ -34,12 +44,12 @@ function App() {
           isShown={isListVisible}
           setShow={setIsListVisible}
           goToMarker={goToMarker}
+          removeMarker={removeMarker}
         />
   
         <Map 
-          getComment={getComment}
+          getModalForm={getModalForm}
           markers={markers}
-          setMarkers={setMarkers}
           targetLocation={targetLocation}
         />
 
@@ -53,8 +63,9 @@ function App() {
 
       {isModalVisible && (
         <ModalForm
-          callback={modalCallback}
+          setMarkers={setMarkers}
           setIsModalVisible={setIsModalVisible}
+          latLng={latLng || new LatLng(0, 0)}
         />
       )}
     </div>

@@ -3,25 +3,22 @@ import styles from './Map.module.scss';
 import { LocationMarker } from '../LocationMarker';
 import { Marker } from '../../types/Marker';
 import { MarkersEventHandler } from '../MarkersEventHandler';
-import { LatLng } from 'leaflet';
-
-type Callback = (prev: Marker[]) => Marker[];
+import { LatLng, marker } from 'leaflet';
 
 interface Props {
-  getComment: (
-    callback: (comment: string) => void,
+  getModalForm: (
+    coords: LatLng,
   ) => void,
   markers: Marker[],
-  setMarkers: (arg: Callback) => void,
+
   targetLocation: LatLng,
 }
 
 
 export const Map: React.FC<Props> = ({
-  getComment,
   markers,
-  setMarkers,
   targetLocation,
+  getModalForm,
 }) => {
  
     return (
@@ -37,13 +34,12 @@ export const Map: React.FC<Props> = ({
         />
 
         <MarkersEventHandler
-          setMarkers={setMarkers}
-          getComment={getComment}
+          getModalForm={getModalForm}
           targetLoacation={targetLocation}
         />
 
-        {markers.map(({ position, comment }) => (
-          <LocationMarker position={position} popup={comment} />
+        {markers.map(marker => (
+          <LocationMarker key={marker.id} marker={marker} />
         ))}
       </MapContainer>
     )

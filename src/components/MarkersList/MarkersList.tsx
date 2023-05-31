@@ -1,7 +1,7 @@
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import styles from './MarkersList.module.scss';
 import { Marker } from '../../types/Marker';
-import { LatLng, latLng } from 'leaflet';
+import { LatLng } from 'leaflet';
 import { MarkersItem } from '../MarkersItem';
 
 interface Props {
@@ -9,6 +9,7 @@ interface Props {
   isShown: boolean,
   setShow: (show: boolean) => void,
   goToMarker: (position: LatLng) => void,
+  removeMarker: (id: number) => void,
 }
 
 export const MarkersList: React.FC<Props> = ({
@@ -16,6 +17,7 @@ export const MarkersList: React.FC<Props> = ({
   setShow,
   markers,
   goToMarker,
+  removeMarker,
 }) => {
   const handleClose = () => setShow(false);
 
@@ -28,10 +30,14 @@ export const MarkersList: React.FC<Props> = ({
         <ul>
           {markers.map(marker => (
             <li
-              key={latLng.toString()}
+              key={marker.id}
               className={styles.markers__item}
             >
-              <MarkersItem marker={marker} goToMarker={goToMarker}/>
+              <MarkersItem 
+                marker={marker} 
+                goToMarker={goToMarker}
+                removeMarker={removeMarker}
+              />
             </li>
           ))}
         </ul>

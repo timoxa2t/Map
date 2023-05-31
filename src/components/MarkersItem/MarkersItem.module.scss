@@ -1,11 +1,71 @@
 
 .marker {
-  &__content {
+  position: relative;
+  overflow: hidden;
+
+  &__header {
     display: flex;
     justify-content: space-between;
     align-items: center;
 
     font-size: 20px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+
+    :not(:last-child) {
+      margin-right: 6px;
+    }
+  }
+
+  &__delete {
+    padding: 0;
+    font-size: 1.2em;
+    border-radius: 5px;
+    color: gray;
+
+    &:hover {
+      color: black;
+    }
+  }
+
+  &__edit {
+    padding: 0;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+
+    background-image: url('../../../src/img/edit-246.svg');
+    background-size: contain;
+  }
+
+  &__title {
+    display: inline-block;
+  }
+
+  &__goto {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+
+    background-image: url('../../../src/img/geolocation-svgrepo-com.svg');
+    background-size: contain;
+  }
+
+  &__loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgba(#000000, 0.2);
   }
 }
