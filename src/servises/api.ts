@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { Marker } from '../types/Marker';
 
-// const BASE_URL = 'https://seahorse-app-7wlro.ondigitalocean.app'
-const BASE_URL = 'http://localhost:3000'
+const BASE_URL = 'https://seahorse-app-7wlro.ondigitalocean.app'
+// const BASE_URL = 'http://localhost:3000'
 
 export const getMarkers = async (): Promise<Marker[]> => {
   const response = await axios.get(`${BASE_URL}/marker`);

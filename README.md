@@ -1,13 +1,15 @@
 # Project Title
 
-Write here about your project in two-three sentences.
+Simple map with markers
 - [DEMO LINK](https://timoxa2t.github.io/Map)
 
 ## Description
 
-Map is implemented with Leaflet. To add your marker double click on the map.
+Map is implemented with Leaflet. To add your marker just click on the map.
 To open one of the markers open the markers list by clicking on the left side arrow.
-In this list you can click on the "Go to marker" button of the particular marker to display it on the map.
+In this list you can click on the marker name to display it on the map.
+Also you can delete markers from this list.
+Click on the marker to see information it contains
 
 ## Local development
 
