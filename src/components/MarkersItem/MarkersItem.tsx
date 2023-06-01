@@ -56,7 +56,6 @@ export const MarkersItem: React.FC<Props> = ({
           <button
             className={styles.marker__edit}
             onClick={() => {}}
-            disabled
           ></button>
 
           <button

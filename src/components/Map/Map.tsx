@@ -10,7 +10,7 @@ interface Props {
     coords: LatLng,
   ) => void,
   markers: Marker[],
-
+  removeMarker: (id: number) => void,
   targetLocation: LatLng,
 }
 
@@ -19,6 +19,7 @@ export const Map: React.FC<Props> = ({
   markers,
   targetLocation,
   getModalForm,
+  removeMarker,
 }) => {
  
     return (
@@ -39,7 +40,11 @@ export const Map: React.FC<Props> = ({
         />
 
         {markers.map(marker => (
-          <LocationMarker key={marker.id} marker={marker} />
+          <LocationMarker
+            key={marker.id}
+            marker={marker}
+            removeMarker={removeMarker}
+          />
         ))}
       </MapContainer>
     )

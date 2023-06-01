@@ -51,6 +51,7 @@ function App() {
           getModalForm={getModalForm}
           markers={markers}
           targetLocation={targetLocation}
+          removeMarker={removeMarker}
         />
 
         <button
